@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
+    <div class="contact-form">
+        <center><table>
+                <tr><td>Nama Pasien</td> <td>:</td> <td><input type="text" id="nama"/> <button type="button" onclick="loadDoc()" id="btn">Cari</button></td></tr>
+            </table></center>
+
+     
+                    <h2><strong></strong></h2>
+                    <pre id="demo"> 
+                      
+                    <script>
+                            function loadDoc() {
+                                var xmlhttp = new XMLHttpRequest();
+                                var url = "http://206.189.38.188:8080/myrs/webresources/pasien/cariNamaPasien?nama=" + nama.value;
+                                xmlhttp.onreadystatechange = function () {
+                                    if (this.readyState == 4 && this.status == 200) {
+    //                                   
+                                        myFunction(this.responseText);
+                                    }
+                                }
+                                xmlhttp.open("GET", url, true);
+                                xmlhttp.send();
+                                function myFunction(response) {
+                                    var arr = JSON.parse(response);
+                                    var i;
+                                    var out = "<table border='1'> <tr><td>Nik</td><td>Nama</td><td>Tanggal Lahir</td><td>Detail</td></tr>";
+                                    for (i = 0; i < arr.length; i++) {
+                                        out += "<tr><td>" +
+                                                arr[i].nik +
+                                                "</td><td>" +
+                                                arr[i].nama +
+                                                "</td><td>" + arr[i].tanggalLahir +
+                                                "</td><td><button type=\"submit\" onclick=\"myFunction1('" + arr[i].nik + "')\">Cek</button></td></tr>";
+                                    }
+                                    out += "</table>";
+                                    document.getElementById("demo").innerHTML = out;
+                                }
+                            }
+                            function myFunction1(nik) {
+                                var myWindow = window.open("detilPasien.html");
+                                setCookie("username", nik, 1);
+                            }
+                            function setCookie(cname, cvalue, exdays) {
+                                var d = new Date();
+                                d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+                                var expires = "expires=" + d.toUTCString();
+                                document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+                            }
+                        </script>
+                
+                </div>
+         
+    </body>
+</html>
+
+    </body>
+</html>
